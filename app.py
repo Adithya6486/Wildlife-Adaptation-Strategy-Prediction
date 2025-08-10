@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
 # ----------------------------
 # PAGE CONFIG
@@ -160,8 +161,13 @@ st.markdown('<h2 id="prediction">🐾 Prediction</h2>', unsafe_allow_html=True)
 st.write("---")
 
 # Load data and model
-Data = pd.read_csv(r"C:\Users\adith\Deployment\env311\local\input.csv")
-model = joblib.load(r"C:\Users\adith\Deployment\env311\local\model.pkl")
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+csv_path = os.path.join(base_dir, "input.csv")
+model_path = os.path.join(base_dir, "model.pkl")
+
+Data = pd.read_csv(csv_path)
+model = joblib.load(model_path)
 
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
@@ -240,3 +246,4 @@ if st.button("Predict"):
 
     st.subheader(f":green[Predicted Adaptation Signal: :blue[{result}]]")
     st.balloons()
+
